@@ -61,3 +61,9 @@ commands:
   workbench:
     aliases: [wb]
     description: Use your workbench from anywhere around the globe!
+  warp:
+    aliases: [wp]
+    description: Warp to any warp that anybody creates!
+  setwarp:
+    aliases: [sw]
+    description: Set your warp to allow anybody to warp to!

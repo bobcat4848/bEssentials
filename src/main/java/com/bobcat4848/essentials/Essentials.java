@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Essentials extends JavaPlugin {
 
 	public static Essentials plugin;
+	public configFile;
 	
 	public void onEnable() {
 		getLogger().info("Plugin Enabled!");
@@ -19,6 +20,8 @@ public class Essentials extends JavaPlugin {
 	
 	private void loadConfigs() {
 		saveDefaultConfig();
+		configFile = new File(Bukkit.getServer().getPluginManager().getPlugin("YourPlugin").getDataFolder(), "config.yml");
+
 	}
 	
 	private void registerCommands() {
@@ -40,6 +43,8 @@ public class Essentials extends JavaPlugin {
 		getCommand("kill").setExecutor(new Kill());
 		getCommand("lightning").setExecutor(new Lightning());
 		getCommand("workbench").setExecutor(new Workbench());
+		getCommand("warp").setExecutor(new Warps());
+		getCommand("setwarp").setExecutor(new Warps());
 	}
 	
 	private void registerEvents() {
