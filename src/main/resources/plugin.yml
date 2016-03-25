@@ -1,0 +1,63 @@
+name: Essentials
+main: com.bobcat4848.essentials.Essentials
+author: bobcat4848
+version: 1.0
+
+commands:
+  teleport:
+    aliases: [tp]
+    description: Teleport to your friends!
+    usage: Incorrect Format! It's /teleport (name) (name) to tp!
+  teleporttomob:
+    aliases: [tptomob]
+    description: Teleport to the closest mob!
+  spawn:
+    aliases:
+    description: Teleport to the server set spawn loc.
+  setspawn:
+    aliases: [ss]
+    description: Set the spawn of the server!
+  repair:
+    aliases: [rp]
+    description: Repair your most precious item!
+    usage: That wasn't quite right.. Use /<command> !
+  rename:
+    aliases: [rn]
+    description: Rename items to your hearts content!
+  heal:
+    aliases:
+    description:
+  feed:
+    aliases:
+    description:
+  tpa:
+    usage: That wasn't quite right.. Use /<command> (name)!
+  tpahere:
+  god:
+    aliases:
+    description:
+  clearinventory:
+    aliases: [ci]
+    description:
+    permission-message: You don't have permission!
+  fly:
+    aliases:
+    description: Fly all the way around the world!
+  speed:
+    aliases:
+    description: Set your fly or your walking speed!
+  timebe:
+    aliases:
+    description: Set the time of day!
+  enderchest:
+    aliases: [ec]
+    description: Use your enderchest from anywhere!
+  kill:
+    aliases:
+    description: Kill yourself or your friends with this handy command!
+  lightning:
+    aliases: [lt]
+    description: Lightning your foes or yourself! It'll go where you're looking!
+  workbench:
+    aliases: [wb]
+    description: Use your workbench from anywhere around the globe!
