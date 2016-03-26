@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.libs.org.ibex.nestedvm.util.Seekable;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -14,8 +13,10 @@ import java.util.List;
 
 public class Warps implements CommandExecutor {
 
-    private List<String> warpNames = new ArrayList<>();
+    private List<String> warpNames = new ArrayList<String>();
     private List<Location> warpLocation = new ArrayList<>();
+    private FileConfiguration warps = Essentials.plugin.getWarpConfig();
+
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = (Player) sender;
@@ -24,7 +25,11 @@ public class Warps implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("warp")) {
             if (args.length == 0) {
                 if (player.hasPermission("be.warp") || player.isOp()) {
-                    sender.sendMessage("Warps: " + warpNames);
+                    sender.sendMessage(warps.getString("warpName"));
+                    System.out.println("Being ran!");
+                    for (String warp : warpNames) {
+                        sender.sendMessage("Warp: " + warp);
+                    }
                 }
             }
             if (args.length == 1) {
@@ -40,6 +45,7 @@ public class Warps implements CommandExecutor {
             if (args.length == 1) {
                 if (player.hasPermission("be.setwarp") || player.isOp()) {
                     String warpName = args[0];
+                    warpNames.add(warpName);
 
                     double x = player.getLocation().getX();
                     double y = player.getLocation().getY();
@@ -47,8 +53,6 @@ public class Warps implements CommandExecutor {
                     float pitch = player.getLocation().getPitch();
                     float yaw = player.getLocation().getYaw();
 
-                    FileConfiguration warps = loadConfiguration();
-                    loadConfiguration(File file)
                     warps.set("Warps.World", player.getWorld().getName());
                     warps.set("Warps.warpName", warpName);
                     warps.set("Warps.x", x);
@@ -56,7 +60,7 @@ public class Warps implements CommandExecutor {
                     warps.set("Warps.z", z);
                     warps.set("Warps.yaw", yaw);
                     warps.set("Warps.pitch", pitch);
-                    Essentials.plugin.saveConfig();
+                    Essentials.plugin.saveCustomConfig();
                     sender.sendMessage("Your warp " + warpName + " has been set!");
 
                 }
@@ -65,5 +69,4 @@ public class Warps implements CommandExecutor {
 
         return true;
     }
-
 }

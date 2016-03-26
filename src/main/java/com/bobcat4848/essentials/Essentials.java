@@ -1,12 +1,21 @@
 package com.bobcat4848.essentials;
 
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.logging.Level;
 
 public class Essentials extends JavaPlugin {
 
 	public static Essentials plugin;
-	public configFile;
-	
+	private FileConfiguration warpConfig = null;
+	private File warps = null;
+
 	public void onEnable() {
 		getLogger().info("Plugin Enabled!");
 		loadConfigs();
@@ -20,8 +29,7 @@ public class Essentials extends JavaPlugin {
 	
 	private void loadConfigs() {
 		saveDefaultConfig();
-		configFile = new File(Bukkit.getServer().getPluginManager().getPlugin("YourPlugin").getDataFolder(), "config.yml");
-
+		saveCustomConfig();
 	}
 	
 	private void registerCommands() {
@@ -51,4 +59,46 @@ public class Essentials extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Teleport(), this);
 		getServer().getPluginManager().registerEvents(new UtilityListener(), this);
 	}
+
+
+	// Custom Config Methods
+	public void reloadCustomConfig() {
+		if (warps == null) {
+			warps = new File(getDataFolder(), "warps.yml");
+		}
+		warpConfig = YamlConfiguration.loadConfiguration(warps);
+
+		// Look for defaults in the jar
+
+		try {
+			Reader defConfigStream = new InputStreamReader(this.getResource("warps.yml"), "UTF8");
+
+			if (defConfigStream != null) {
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				warpConfig.setDefaults(defConfig);
+			}
+		} catch (Exception e) {
+
+		}
+	}
+
+	public FileConfiguration getWarpConfig() {
+		if (warpConfig == null) {
+			reloadCustomConfig();
+		}
+		return warpConfig;
+	}
+
+	public void saveCustomConfig() {
+		if (warpConfig == null || warps == null) {
+			return;
+		}
+		try {
+			getWarpConfig().save(warps);
+		} catch (IOException ex) {
+			getLogger().log(Level.SEVERE, "Could not save config to " + warps, ex);
+		}
+	}
+
+
 }
