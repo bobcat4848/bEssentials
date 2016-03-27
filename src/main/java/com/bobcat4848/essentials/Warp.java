@@ -1,25 +1,24 @@
 package com.bobcat4848.essentials;
 
+import com.bobcat4848.essentials.Essentials;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.logging.Level;
 
 import static org.bukkit.Bukkit.getLogger;
 
 public class Warp {
 
-    protected static FileConfiguration warpConfig = null;
-    protected static File warps = null;
+    public static FileConfiguration warpConfig = null;
+    public static File warps = null;
 
     // Custom Config Methods
     public static void reloadCustomConfig() {
         if (warps == null) {
-            //warps = new File(getDataFolder(), "warps.yml");
+            warps = new File(Essentials.plugin.getDataFolder(), "warps.yml");
             if (!warps.exists()) {
                 try {
                     warps.createNewFile();
@@ -29,18 +28,7 @@ public class Warp {
             }
         }
         warpConfig = YamlConfiguration.loadConfiguration(warps);
-
-        // Look for defaults in the jar
-        try {
-            Reader defConfigStream = new InputStreamReader(Essentials.plugin.getResource("warps.yml"), "UTF8");
-
-            if (defConfigStream != null) {
-                YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-                warpConfig.setDefaults(defConfig);
-            }
-        } catch (Exception e) {
-
-        }
+        Essentials.plugin.saveResource(warps.getName(), false);
     }
 
     public static FileConfiguration getWarpConfig() {

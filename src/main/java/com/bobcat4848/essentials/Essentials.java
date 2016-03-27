@@ -6,12 +6,11 @@ import java.io.File;
 
 public class Essentials extends JavaPlugin {
 
-    protected static Essentials plugin;
+    public static Essentials plugin;
 
     public void onEnable() {
         getLogger().info("Plugin Enabled!");
 
-        Warp.warps = new File(getDataFolder(), "warps.yml");
         loadConfigs();
         Warp.reloadCustomConfig();
         getLogger().info("Configs loaded!");
